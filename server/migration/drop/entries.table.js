@@ -1,7 +1,7 @@
 import { Pool } from 'pg';
 import config from '../../config/config';
 
-const db = new Pool(config.dev);
+const db = new Pool(config.development);
 // delete entries table
 db.query('DROP TABLE IF EXISTS entries CASCADE;')
   .then((response) => {
