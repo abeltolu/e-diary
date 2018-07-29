@@ -9,10 +9,10 @@ describe('Authentication', () => {
   describe('Create user account', () => {
     it('should create user account', (done) => {
       const user = {
-        firstname: 'sullivan',
-        lastname: 'wisdom',
+        firstname: 'ricky',
+        lastname: 'ezechi',
         email: `${email}@gmail.com`,
-        password: 'lastdays66788',
+        password: 'lastdays66',
       };
       chai.request(app)
         .post('/api/v1/auth/signup')
@@ -27,8 +27,8 @@ describe('Authentication', () => {
       const user = {
         firstname: 'sullivan',
         lastname: 'wisdom',
-        email: 'wiztemple7@gmail.com',
-        password: 'lastdays66788',
+        email: 'sullivan@gmail.com',
+        password: 'lastdays',
       };
       chai.request(app)
         .post('/api/v1/auth/signup')
@@ -171,8 +171,8 @@ describe('Authentication', () => {
   describe('user login', () => {
     it('should login a registered user', (done) => {
       const user = {
-        email: 'wiztemple7@gmail.com',
-        password: 'lastdays66788',
+        email: 'sullivan@gmail.com',
+        password: 'lastdays',
       };
       chai.request(app)
         .post('/api/v1/auth/login')
@@ -186,7 +186,7 @@ describe('Authentication', () => {
     });
     it('should not login a user with incorrect password', (done) => {
       const user = {
-        email: 'wiztemple7@gmail.com',
+        email: 'sullivan@gmail.com',
         password: 'lastdays66',
       };
       chai.request(app)

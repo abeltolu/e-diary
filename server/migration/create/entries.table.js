@@ -1,7 +1,7 @@
 import { Pool } from 'pg';
 import config from '../../config/config';
 
-const db = new Pool(config.development);
+const db = new Pool(config.test);
 // create entries table
 db.query(
   `CREATE TABLE IF NOT EXISTS entries

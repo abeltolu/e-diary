@@ -58,4 +58,21 @@ export default class Validation {
     }
     return next();
   }
+
+  static checkEntryInputs(request, response, next) {
+    const { title, note } = request.body;
+    if (!title || title === '' || title.trim() === undefined || (typeof title !== 'string')) {
+      return response.status(400).json({
+        status: 'fail',
+        message: 'title is required',
+      });
+    }
+    if (!note || note === '' || note.trim() === undefined || (typeof note !== 'string')) {
+      return response.status(400).json({
+        status: 'fail',
+        message: 'entry note is required',
+      });
+    }
+    return next();
+  }
 }

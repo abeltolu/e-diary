@@ -1,0 +1,44 @@
+import db from '../config/connect';
+
+class EntryController {
+  static async createEntry(request, response) {
+    const userId = request.userId.id;
+    const { title, imageUrl, note } = request.body;
+    try {
+      const query = `SELECT * FROM entries WHERE title = '${title}'`;
+      const checkIfEntryExists = await db.query(query);
+      if (checkIfEntryExists.rowCount > 0) {
+        return response.status(409).json({
+          status: 'fail',
+          message: 'entry already exists',
+        });
+      }
+      const insertQuery = `INSERT INTO entries (user_id, title, image_url, note) VALUES ('${userId}', '${title}', '${imageUrl}', '${note}') RETURNING * `;
+      const newEntry = await db.query(insertQuery);
+      if (!newEntry) {
+        return response.status(403).json({
+          status: 'fail',
+          message: 'entry was not created',
+        });
+      }
+      return response.status(201).json({
+        status: 'success',
+        message: 'entry created',
+        entry: {
+          id: newEntry.rows[0].id,
+          userId: newEntry.rows[0].user_id,
+          title: newEntry.rows[0].title,
+          imageUrl: newEntry.rows[0].image_url,
+          note: newEntry.rows[0].note,
+          createdAt: newEntry.rows[0].created_at,
+        },
+      });
+    } catch (error) {
+      return response.status(500).json({
+        status: 'fail',
+        message: error.message,
+      });
+    }
+  }
+}
+export default EntryController;

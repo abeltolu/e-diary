@@ -2,6 +2,7 @@ import express from 'express';
 import logger from 'volleyball';
 import dotenv from 'dotenv';
 import authRoute from './server/routes/authroute';
+import entryRoute from './server/routes/entryroute';
 
 dotenv.config();
 
@@ -21,8 +22,12 @@ app.get('/', (request, response) => response.status(200).json({
   status: 'success',
   message: 'Welcome to e-diary, jot down your thoughts',
 }));
+
 // Authentication route
 app.use('/api/v1/auth', authRoute);
+// Entry Route
+app.use('/api/v1/users/entries', entryRoute);
+
 // connect
 app.listen(port, () => {
   // eslint-disable-next-line
