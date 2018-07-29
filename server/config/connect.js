@@ -9,7 +9,6 @@ const db = new Pool(config.test);
 // } else {
 //   db = new Pool(config.development);
 // }
-console.log(config.test);
 // connect pg
 db.connect().then(() => {
   // eslint-disable-next-line
