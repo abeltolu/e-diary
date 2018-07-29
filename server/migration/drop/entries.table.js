@@ -8,6 +8,5 @@ db.query('DROP TABLE IF EXISTS entries CASCADE;')
     // eslint-disable-next-line
     console.log(response);
   }).catch((error) => {
-    // eslint-disable-next-line
     console.log(error.message);
   });
