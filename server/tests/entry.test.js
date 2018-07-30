@@ -77,4 +77,18 @@ describe('Authentication', () => {
         });
     });
   });
+  describe('Create diary entry', () => {
+    it('should return all entries made by a particular user', (done) => {
+      chai.request(app)
+        .get('/api/v1/users/entries')
+        .set('Authorization', userToken)
+        .send()
+        .end((error, response) => {
+          response.should.have.status(200);
+          response.should.be.an('object');
+          response.body.should.have.property('message').to.equal('all entries');
+          done();
+        });
+    });
+  });
 });

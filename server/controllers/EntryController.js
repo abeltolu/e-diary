@@ -1,6 +1,55 @@
 import db from '../config/connect';
 
 class EntryController {
+  static async getAllEntries(request, response) {
+    const userId = request.userId.id;
+    const query = `SELECT * FROM entries WHERE user_id = '${userId}' ORDER BY id ASC`;
+    try {
+      const result = await db.query(query);
+      if (!result) {
+        return response.status(404).json({
+          status: 'fail',
+          message: 'no entries found',
+        });
+      }
+      return response.status(200).json({
+        status: 'success',
+        message: 'all entries',
+        entries: result.rows,
+      });
+    } catch (error) {
+      return response.status(500).json({
+        status: 'fail',
+        message: error.message,
+      });
+    }
+  }
+
+  static async getSingleEntry(request, response) {
+    const userId = request.userId.id;
+    const { entryId } = request.params;
+    const query = `SELECT FROM entries WHERE id = ${entryId} AND user_id = ${userId}`;
+    try {
+      const result = await db.query(query);
+      if (!result) {
+        return response.status(404).json({
+          status: 'fail',
+          message: 'entry not found',
+        });
+      }
+      return response.status(200).json({
+        status: 'success',
+        message: 'entry successfully returned',
+        entry: result.rows[0],
+      });
+    } catch (error) {
+      return response.status(500).json({
+        status: 'fail',
+        message: error.message,
+      });
+    }
+  }
+
   static async createEntry(request, response) {
     const userId = request.userId.id;
     const { title, imageUrl, note } = request.body;
